@@ -18,17 +18,34 @@ module Aws
     #
     class Credentials < Seahorse::Client::Plugin
 
-      option(:access_key_id) {
-        ENV['AWS_ACCESS_KEY_ID'] || ENV['AMAZON_ACCESS_KEY_ID']
-      }
+      require 'configparser'
 
-      option(:secret_access_key) {
-        ENV['AWS_SECRET_ACCESS_KEY'] || ENV['AMAZON_SECRET_ACCESS_KEY']
-      }
+      option(:parser) do |config|
+        config_file = "#{ENV['HOME']}/.aws/config"
+        if File.exist?(config_file)
+          ConfigParser.new(config_file)['default']
+        else
+          {}
+        end
+      end
 
-      option(:session_token) {
-        ENV['AWS_SESSION_TOKEN'] || ENV['AMAZON_SESSION_TOKEN']
-      }
+      option(:access_key_id) do |config|
+        ENV['AWS_ACCESS_KEY_ID'] ||
+        ENV['AMAZON_ACCESS_KEY_ID'] ||
+        config.parser['aws_access_key_id']
+      end
+
+      option(:secret_access_key) do |config|
+        ENV['AWS_SECRET_ACCESS_KEY'] ||
+        ENV['AMAZON_SECRET_ACCESS_KEY'] ||
+        config.parser['aws_secret_access_key']
+      end
+
+      option(:session_token) do |config|
+        ENV['AWS_SESSION_TOKEN'] ||
+        ENV['AMAZON_SESSION_TOKEN'] ||
+        config.parser['aws_security_token']
+      end
 
       option(:credentials) do |config|
         Aws::Credentials.new(
