@@ -105,6 +105,34 @@ resp = resp.next_page # send a request for the next response page
 resp = resp.next_page until resp.last_page?
 ```
 
+The data in the pages is accessible by the data method which returns a struct:
+```ruby
+# request a metric
+metric = cw.get_metric_statistics(
+  :namespace => "AWS/Billing",
+  :metric_name => "EstimatedCharges",
+  :dimensions => [
+    {
+      :name => "ServiceName",
+	  :value => "AmazonS3",
+    },
+    {
+      :name => 'Currency',
+      :value => 'USD'
+    }
+  ],
+  :start_time => Time.now - 24 * 60 * 60,
+  :end_time => Time.now,
+  :period => 86400,
+  :statistics => ["Maximum"]
+)
+puts metric.data
+#<struct label="EstimatedCharges", datapoints=[#<struct timestamp=2013-11-28 17:10:00 UTC, sample_count=nil, average=nil, sum=nil, minimum=nil, maximum=1234.56, unit="None">]>
+```
+
+The structs can be iterated and the data can be accessed in a number of ways.  Refer to the 'Response Structure' tab in the documentation for each client.
+
+
 ## Interactive Console
 
 AWS SDK Core ships with a REPL that acts as an interactive console. You
