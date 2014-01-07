@@ -81,6 +81,7 @@ module Aws
     autoload :SignatureV3, "#{SRC}/plugins/signature_v3"
     autoload :SignatureV4, "#{SRC}/plugins/signature_v4"
     autoload :SQSQueueUrls, "#{SRC}/plugins/sqs_queue_urls"
+    autoload :Stub, "#{SRC}/plugins/stub"
     autoload :SWFReadTimeouts, "#{SRC}/plugins/swf_read_timeouts"
     autoload :UserAgent, "#{SRC}/plugins/user_agent"
     autoload :XmlProtocol, "#{SRC}/plugins/xml_protocol"
