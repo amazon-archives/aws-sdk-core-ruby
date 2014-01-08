@@ -32,6 +32,16 @@ module Aws
         expect(response.data[:foo]).to eq 'bar'
       end
 
+      it 'stubs multiple responses' do
+        ec2.add_stub(:describe_instances, {foo: 'bar'})
+        ec2.add_error(:describe_instances, "Blocked")
+        ec2.add_stub(:describe_instances, {foo: 'baz'})
+        expect(ec2.describe_instances.data[:foo]).to eq 'bar'
+        expect{ ec2.describe_instances }.to raise_error
+        expect(ec2.describe_instances.data[:foo]).to eq 'baz'
+        expect(ec2.describe_instances.data[:foo]).to eq 'baz'
+      end
+
       it 'raises expected error' do
         ec2.add_error(:describe_instances, "Blocked")
         expect{ ec2.describe_instances }.to raise_error(Aws::EC2::Errors::Blocked)
