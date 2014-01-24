@@ -37,151 +37,158 @@
       "http_path": "/2012-12-12/hostedzone/{hosted_zone_id}/rrset/",
       "input": {
         "type": "input",
-        "serialized_name": "ChangeResourceRecordSetsRequest",
-        "metadata": {
-          "xmlns_uri": "https://route53.amazonaws.com/doc/2012-12-12/"
-        },
         "members": {
           "hosted_zone_id": {
             "type": "string",
             "required": true,
             "location": "uri"
           },
-          "change_batch": {
+          "record_sets": {
             "type": "structure",
             "required": true,
-            "serialized_name": "ChangeBatch",
-            "members": {
-              "comment": {
-                "type": "string",
-                "serialized_name": "Comment"
-              },
-              "changes": {
-                "type": "list",
-                "required": true,
-                "serialized_name": "Changes",
-                "members": {
-                  "type": "structure",
-                  "serialized_name": "Change",
-                  "members": {
-                    "action": {
-                      "type": "string",
-                      "required": true,
-                      "serialized_name": "Action",
-                      "enum": [
-                        "CREATE",
-                        "DELETE"
-                      ]
-                    },
-                    "resource_record_set": {
-                      "type": "structure",
-                      "required": true,
-                      "serialized_name": "ResourceRecordSet",
-                      "members": {
-                        "name": {
-                          "type": "string",
-                          "required": true,
-                          "serialized_name": "Name"
-                        },
-                        "type": {
-                          "type": "string",
-                          "required": true,
-                          "serialized_name": "Type",
-                          "enum": [
-                            "SOA",
-                            "A",
-                            "TXT",
-                            "NS",
-                            "CNAME",
-                            "MX",
-                            "PTR",
-                            "SRV",
-                            "SPF",
-                            "AAAA"
-                          ]
-                        },
-                        "set_identifier": {
-                          "type": "string",
-                          "serialized_name": "SetIdentifier"
-                        },
-                        "weight": {
-                          "type": "integer",
-                          "serialized_name": "Weight"
-                        },
-                        "region": {
-                          "type": "string",
-                          "serialized_name": "Region",
-                          "enum": [
-                            "us-east-1",
-                            "us-west-1",
-                            "us-west-2",
-                            "eu-west-1",
-                            "ap-southeast-1",
-                            "ap-southeast-2",
-                            "ap-northeast-1",
-                            "sa-east-1"
-                          ]
-                        },
-                        "failover": {
-                          "type": "string",
-                          "serialized_name": "Failover",
-                          "enum": [
-                            "PRIMARY",
-                            "SECONDARY"
-                          ]
-                        },
-                        "ttl": {
-                          "type": "integer",
-                          "serialized_name": "TTL"
-                        },
-                        "resource_records": {
-                          "type": "list",
-                          "serialized_name": "ResourceRecords",
-                          "members": {
-                            "type": "structure",
-                            "serialized_name": "ResourceRecord",
-                            "members": {
-                              "value": {
-                                "type": "string",
-                                "required": true,
-                                "serialized_name": "Value"
-                              }
-                            }
-                          }
-                        },
-                        "alias_target": {
-                          "type": "structure",
-                          "serialized_name": "AliasTarget",
-                          "members": {
-                            "hosted_zone_id": {
-                              "type": "string",
-                              "required": true,
-                              "serialized_name": "HostedZoneId"
-                            },
-                            "dns_name": {
-                              "type": "string",
-                              "required": true,
-                              "serialized_name": "DNSName"
-                            },
-                            "evaluate_target_health": {
-                              "type": "boolean",
-                              "required": true,
-                              "serialized_name": "EvaluateTargetHealth"
-                            }
-                          }
-                        },
-                        "health_check_id": {
-                          "type": "string",
-                          "serialized_name": "HealthCheckId"
-                        }
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
+            "serialized_name": "ChangeResourceRecordSetsRequest",
+	        "metadata": {
+	          "xmlns_uri": "https://route53.amazonaws.com/doc/2012-12-12/"
+	        },
+		    "members": {
+	          "change_batch": {
+	            "type": "structure",
+	            "required": true,
+	            "serialized_name": "ChangeBatch",
+	            "members": {
+	              "comment": {
+	                "type": "string",
+	                "serialized_name": "Comment"
+	              },
+	              "changes": {
+	                "type": "list",
+	                "required": true,
+	                "serialized_name": "Changes",
+	                "members": {
+	                  "type": "structure",
+	                  "serialized_name": "Change",
+	                  "members": {
+	                    "action": {
+	                      "type": "string",
+	                      "required": true,
+	                      "serialized_name": "Action",
+	                      "enum": [
+	                        "CREATE",
+	                        "DELETE"
+	                      ]
+	                    },
+	                    "resource_record_set": {
+	                      "type": "structure",
+	                      "required": true,
+	                      "serialized_name": "ResourceRecordSet",
+	                      "members": {
+	                        "name": {
+	                          "type": "string",
+	                          "required": true,
+	                          "serialized_name": "Name"
+	                        },
+	                        "type": {
+	                          "type": "string",
+	                          "required": true,
+	                          "serialized_name": "Type",
+	                          "enum": [
+	                            "SOA",
+	                            "A",
+	                            "TXT",
+	                            "NS",
+	                            "CNAME",
+	                            "MX",
+	                            "PTR",
+	                            "SRV",
+	                            "SPF",
+	                            "AAAA"
+	                          ]
+	                        },
+	                        "set_identifier": {
+	                          "type": "string",
+	                          "serialized_name": "SetIdentifier"
+	                        },
+	                        "weight": {
+	                          "type": "integer",
+	                          "serialized_name": "Weight"
+	                        },
+	                        "region": {
+	                          "type": "string",
+	                          "serialized_name": "Region",
+	                          "enum": [
+	                            "us-east-1",
+	                            "us-west-1",
+	                            "us-west-2",
+	                            "eu-west-1",
+	                            "ap-southeast-1",
+	                            "ap-southeast-2",
+	                            "ap-northeast-1",
+	                            "sa-east-1"
+	                          ]
+	                        },
+	                        "failover": {
+	                          "type": "string",
+	                          "serialized_name": "Failover",
+	                          "enum": [
+	                            "PRIMARY",
+	                            "SECONDARY"
+	                          ]
+	                        },
+	                        "ttl": {
+	                          "type": "integer",
+	                          "serialized_name": "TTL"
+	                        },
+	                        "resource_records": {
+	                          "type": "list",
+	                          "serialized_name": "ResourceRecords",
+	                          "members": {
+	                            "type": "structure",
+	                            "serialized_name": "ResourceRecord",
+	                            "members": {
+	                              "value": {
+	                                "type": "string",
+	                                "required": true,
+	                                "serialized_name": "Value"
+	                              }
+	                            }
+	                          }
+	                        },
+	                        "alias_target": {
+	                          "type": "structure",
+	                          "serialized_name": "AliasTarget",
+	                          "members": {
+	                            "hosted_zone_id": {
+	                              "type": "string",
+	                              "required": true,
+	                              "serialized_name": "HostedZoneId"
+	                            },
+	                            "dns_name": {
+	                              "type": "string",
+	                              "required": true,
+	                              "serialized_name": "DNSName"
+	                            },
+	                            "evaluate_target_health": {
+	                              "type": "boolean",
+	                              "required": true,
+	                              "serialized_name": "EvaluateTargetHealth"
+	                            }
+	                          }
+	                        },
+	                        "health_check_id": {
+	                          "type": "string",
+	                          "serialized_name": "HealthCheckId"
+	                        }
+	                      }
+	                    }
+	                  }
+	                }
+	              }
+	            }
+	          }
+	        }
+		  }
+		},
+        "payload": "record_sets"
       },
       "output": {
         "type": "output",
