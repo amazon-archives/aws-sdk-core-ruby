@@ -49,8 +49,12 @@ module Aws
         else
           prefix += '.member'
         end
-        values.each_with_index do |value, n|
-          member(param_list, member_shape, "#{prefix}.#{n+1}", value)
+        if values.empty? && shape.required
+          member(param_list, member_shape, prefix.split('.').first, '')
+        else
+          values.each_with_index do |value, n|
+            member(param_list, member_shape, "#{prefix}.#{n+1}", value)
+          end
         end
       end
 
