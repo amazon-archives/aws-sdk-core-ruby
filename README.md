@@ -133,6 +133,8 @@ Aws> service_classes
  :swf=>Aws::SWF}
 ```
 
+**Note:** To run Interactive Console you need to have Pry installed `gem install pry`.
+
 ## Versioning
 
 This project uses [semantic versioning](http://semver.org/). When the project
