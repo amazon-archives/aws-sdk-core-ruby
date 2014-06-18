@@ -132,6 +132,20 @@ module Aws
             ])
           end
 
+          it 'supports empty lists for required fields' do
+            rules['members'] = {
+              'items' => {
+                'type' => 'flat_list',
+                'members' => { 'type' => 'string' },
+                'required' => true,
+                  'serialized_name' => 'PolicyNames'
+              }
+            }
+            expect(query_params(items: [])).to eq([
+              ['PolicyNames', ''],
+            ])
+          end
+
         end
 
         describe 'non-flattened lists' do
@@ -189,6 +203,20 @@ module Aws
             expect(query_params(params)).to eq([
               ['people.member.1.name', 'John'],
               ['people.member.2.name', 'Jane'],
+            ])
+          end
+
+          it 'supports empty lists for required fields' do
+            rules['members'] = {
+              'items' => {
+                'type' => 'flat_list',
+                'members' => { 'type' => 'string' },
+                'required' => true,
+                'serialized_name' => 'PolicyNames'
+              }
+            }
+            expect(query_params(items: [])).to eq([
+              ['PolicyNames', ''],
             ])
           end
 
