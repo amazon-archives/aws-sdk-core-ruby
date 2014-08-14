@@ -48,21 +48,43 @@ module Seahorse
             path = uri.path.sub(/\/$/, '')
             path += context.operation.http_request_uri.split('?')[0]
             input = context.operation.input
-            uri.path = path.gsub(/{\w+\+?}/) do |placeholder|
-              if placeholder.include?('+')
-                placeholder = placeholder[1..-3]
-                greedy = true
-              else
-                placeholder = placeholder[1..-2]
-              end
-              name, shape = input.member_by_location_name(placeholder)
-              param = context.params[name]
-              if greedy
-                param.split('/').map{ |value| escape(value) }.join('/')
-              else
-                escape(param)
-              end
+
+            # Grab all placeholders
+            placeholders = path.scan(/{\w+\+?}/)
+
+            # Verify uniqueness - unsure if necessary
+            if placeholders.uniq.length != placeholders.length
+              msg = "non-unique uri params defined for endpoint"
+              raise ArgumentError, msg
             end
+
+            # Replace
+            placeholders.each_with_index do |name, idx|
+              sanitized = name.match(/(?<name>\w+)/)[:name]
+              sanitized, shape = input.member_by_location_name(sanitized)
+              param = context.params[sanitized]
+              unless param
+                if idx == placeholders.count - 1
+                  param = ""
+                else
+                  msg = "non-trailing uri params must be defined!"
+                  raise ArgumentError, msg
+                end
+              end
+
+              param = (case name
+                when /\w\+/
+                  param.split('/').map{ |value| escape(value) }.join('/')
+                else
+                  escape(param)
+                end
+              )
+
+              path.gsub!(name, param)
+            end
+
+            path.sub!(/\/$/, '')
+            uri.path = path
           end
 
           def apply_querystring_params(uri, context)
