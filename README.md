@@ -202,6 +202,95 @@ resp = resp.next_page # send a request for the next response page
 resp = resp.next_page until resp.last_page?
 ```
 
+The data in the response is accessible via the [data](http://docs.aws.amazon.com/sdkforruby/api/Seahorse/Client/Response.html#data-instance_method) method which returns a struct:
+```ruby
+# example: request a metric from CloudWatch using get_metric_statistics
+metric = cw.get_metric_statistics(
+  :namespace => "AWS/Billing",
+  :metric_name => "EstimatedCharges",
+  :dimensions => [
+    {
+      :name => "ServiceName",
+      :value => "AmazonS3",
+    },
+    ...
+  ],
+  ...
+)
+puts metric.data
+#<struct label="EstimatedCharges", datapoints=[#<struct timestamp=2013-11-28 17:10:00 UTC, sample_count=nil, average=nil, sum=nil, minimum=nil, maximum=1234.56, unit="None">]>
+```
+
+Refer to the 'Response Structure' tab in the documentation for each client.
+
+## Data Iteration Examples
+
+You can access the data in your response structs in a number of ways.
+Here are a couple of examples to get you started.
+
+S3 Bucket ACLs:
+```ruby
+# get a list of buckets
+my_buckets = s3.list_buckets.buckets.map(&:name)
+
+# iterate buckets and output the owner and permissions
+my_buckets.each do |bucket|
+  s3.get_bucket_acl(:bucket => bucket).grants.each do |grant|
+    owner      = grant.grantee.display_name
+    permission = grant.permission
+    
+    puts "Bucket '#{bucket}' grants user '#{owner.nil? ? "Everyone" : owner}' with '#{permission}'"
+  end
+end
+```
+
+S3 Bucket Logging:
+```ruby
+# get a list of buckets
+my_buckets = s3.list_buckets.buckets.map(&:name)
+
+# iterate buckets and check if they have logging enabled
+my_buckets.each do |bucket|
+  target_logging_bucket = s3.get_bucket_logging(:bucket => bucket).logging_enabled
+  
+  if target_logging_bucket.nil?
+    puts "Bucket '#{bucket}' doesn't have bucket logging enabled."
+  else
+    puts "Bucket '#{bucket}' is logging to bucket '#{target_logging_bucket.target_bucket}'"+
+         " in prefix '#{target_logging_bucket.target_prefix}'."
+  end
+end
+```
+
+Billing Estimated Charges:
+```ruby
+# get a billing metric
+metric = cw.get_metric_statistics(
+  :namespace => "AWS/Billing",
+  :metric_name => "EstimatedCharges",
+  :dimensions => [
+    {
+      :name => "ServiceName",
+      :value => "AmazonS3",
+    },
+    {
+      :name => 'Currency',
+      :value => 'USD'
+    }
+  ],
+  :start_time => Time.now - 24 * 60 * 60,
+  :end_time => Time.now,
+  :period => 24 * 60 * 60,
+  :statistics => ["Minimum","Maximum"]
+  )
+
+metric.datapoints.each do |dp|
+  puts "Over the past 24hrs our S3 cost has increased $#{(dp.maximum - dp.minimum).round(2)}"+
+       " from $#{dp.minimum} to $#{dp.maximum}."
+end
+```
+
+
 ## Interactive Console
 
 AWS SDK Core ships with a REPL that acts as an interactive console. You
