@@ -922,7 +922,8 @@
         "Expires":{
           "shape":"Expires",
           "location":"header",
-          "locationName":"Expires"
+          "locationName":"Expires",
+          "timestampFormat":"httpdate"
         },
         "GrantFullControl":{
           "shape":"GrantFullControl",
@@ -1167,7 +1168,8 @@
         "Expires":{
           "shape":"Expires",
           "location":"header",
-          "locationName":"Expires"
+          "locationName":"Expires",
+          "timestampFormat":"httpdate"
         },
         "GrantFullControl":{
           "shape":"GrantFullControl",
@@ -1465,7 +1467,10 @@
         "Disabled"
       ]
     },
-    "Expires":{"type":"timestamp"},
+    "Expires":{
+      "type":"timestamp",
+      "timestampFormat":"httpdate"
+    },
     "ExposeHeader":{"type":"string"},
     "ExposeHeaders":{
       "type":"list",
@@ -1792,7 +1797,8 @@
         "Expires":{
           "shape":"Expires",
           "location":"header",
-          "locationName":"Expires"
+          "locationName":"Expires",
+          "timestampFormat":"httpdate"
         },
         "WebsiteRedirectLocation":{
           "shape":"WebsiteRedirectLocation",
@@ -1892,7 +1898,8 @@
         "ResponseExpires":{
           "shape":"ResponseExpires",
           "location":"querystring",
-          "locationName":"response-expires"
+          "locationName":"response-expires",
+          "timestampFormat":"httpdate"
         },
         "VersionId":{
           "shape":"ObjectVersionId",
@@ -2066,7 +2073,8 @@
         "Expires":{
           "shape":"Expires",
           "location":"header",
-          "locationName":"Expires"
+          "locationName":"Expires",
+          "timestampFormat":"httpdate"
         },
         "WebsiteRedirectLocation":{
           "shape":"WebsiteRedirectLocation",
@@ -3106,7 +3114,8 @@
         "Expires":{
           "shape":"Expires",
           "location":"header",
-          "locationName":"Expires"
+          "locationName":"Expires",
+          "timestampFormat":"httpdate"
         },
         "GrantFullControl":{
           "shape":"GrantFullControl",
@@ -3205,7 +3214,10 @@
     "ResponseContentEncoding":{"type":"string"},
     "ResponseContentLanguage":{"type":"string"},
     "ResponseContentType":{"type":"string"},
-    "ResponseExpires":{"type":"timestamp"},
+    "ResponseExpires":{
+      "type":"timestamp",
+      "timestampFormat":"httpdate"
+    },
     "Restore":{"type":"string"},
     "RestoreObjectRequest":{
       "type":"structure",
