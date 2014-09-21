@@ -1,0 +1,79 @@
+.TH AWS.RB 1 2014-09-21 "Ruby Gem" "aws-sdk-core"
+
+.SH NAME
+aws.rb - Amazon Web Service interactive console
+
+.SH SYNOPSIS
+\fBaws.rb\fR [\fIOPTIONS\fR]
+
+.SH DESCRIPTION
+\fBaws.rb\fR is utility for Amazon Web Service that acts as an interactive console with configured AWS environment.
+
+.SH OPTIONS
+
+.TP
+\fB--region\fR \fINAME\fR
+Specify the AWS region, e.g. us-west-2.
+
+.TP
+\fB--repl\fR \fIREPL\fR
+Specify the REPL environment, pry or irb.
+
+.TP
+\fB-e\fR \fICOMMAND\fR
+One line of script. Several \fB-e\fR's allowed.
+
+.TP
+\fB-l\fR, \fB--[no-]log\fR
+Log client requets, on by default.
+
+.TP
+\fB-c\fR, \fB--[no-]color\fR
+Colorize request logging, on by default.
+
+.TP
+\fB-d\fR, \fB--[no-]debug\fR
+Log HTTP wire traces, off by default.
+
+.TP
+\fB-I\fR\fIDIRECTORY\fR
+Specify $LOAD_PATH directory (may be used more than once).
+
+.TP
+\fB-r\fR\fILIBRARY\fR
+Require the library.
+
+.TP
+\fB-v\fR, \fB--verbose\fR
+Enable client logging and HTTP wire tracing.
+
+.TP
+\fB-q\fR, \fB--quiet\fR
+Disable client logging and HTTP wire tracing.
+
+.TP
+\fB-h\fR, \fB--help\fR
+Show help message.
+
+.SH ENVIRONMENT
+
+.TP
+.B AWS_REGION
+Default region to use (for example us-west-2, us-east-1).
+
+.TP
+.B AWS_ACCESS_KEY_ID
+Credentials key ID.
+
+.TP
+.B AWS_SECRET_ACCESS_KEY
+Credentials key secret.
+
+.SH FILES
+
+.TP
+.I $HOME/.aws/credentials
+Credentials ini file.
+
+.SH AUTHORS
+Amazon Web Services
