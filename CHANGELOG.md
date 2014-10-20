@@ -1,6 +1,18 @@
 Next Release (TBD)
 ------------------
 
+* Feature - SQS Batch Message Delete - `Aws::SQS::Message` objects can
+  now be deleted in batches. See #141.
+
+  ```ruby
+  messages = queue.receive_messages(max_number_of_messages: 5)
+
+  # do something with messages ...
+
+  # delete the batch of messages in a single request
+  messages.delete
+  ```ruby
+
 * Feature - Queue Attributes - `Aws::SQS::Queue` now has getter methods for
   queue attributes that return type-casted values from the `#attributes`
   hash.
