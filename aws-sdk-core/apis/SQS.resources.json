@@ -169,6 +169,18 @@
             ]
           }
         }
+      },
+      "batchActions": {
+        "Delete": {
+          "request": {
+            "operation":"DeleteMessageBatch",
+            "params": [
+              { "target":"QueueUrl", "sourceType":"identifier", "source":"QueueUrl" },
+              { "target":"Entries[n].Id", "sourceType":"dataMember", "source":"MessageId" },
+              { "target":"Entries[n].ReceiptHandle", "sourceType":"identifier", "source":"ReceiptHandle" }
+            ]
+          }
+        }
       }
     }
   }
