@@ -161,7 +161,7 @@ module Aws
       end
 
       def signed_headers(request)
-        headers = request.headers.keys
+        headers = request.headers.keys.map(&:downcase)
         headers.delete('authorization')
         headers.sort.join(';')
       end
