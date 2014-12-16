@@ -14,8 +14,8 @@ module Aws
       # @param [Hash, nil] target
       # @return [Structure]
       def parse(xml, target = nil, &block)
-        parsed_xml = MultiXml.parse(xml)
-        xml = parsed_xml.values.first if parsed_xml && parsed_xml.values
+        xml = MultiXml.parse(xml)
+        xml = xml.values.first if xml && xml.values
         xml ||= {}
 
         yield(xml) if block_given?
