@@ -5,7 +5,6 @@ require 'base64'
 module Aws
   module Xml
     class Parser
-
       # @param [Seahorse::Model::Shapes::Structure] shape
       def initialize(shape)
         @shape = shape
@@ -15,7 +14,10 @@ module Aws
       # @param [Hash, nil] target
       # @return [Structure]
       def parse(xml, target = nil, &block)
-        xml = MultiXml.parse(xml).values.first || {}
+        parsed_xml = MultiXml.parse(xml)
+        xml = parsed_xml.values.first if parsed_xml && parsed_xml.values
+        xml ||= {}
+
         yield(xml) if block_given?
         structure(@shape, xml, target)
       end
@@ -133,7 +135,6 @@ module Aws
       def flat?(shape)
         !!shape.metadata('flattened')
       end
-
     end
   end
 end
