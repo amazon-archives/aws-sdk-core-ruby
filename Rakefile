@@ -38,3 +38,15 @@ begin
   Coveralls::RakeTask.new
 rescue LoadError
 end
+
+desc 'Open a console with aws-sdk loaded'
+task :console do
+  begin
+    require 'pry'
+    Pry.start
+  rescue LoadError
+    require 'irb'
+    ARGV.clear
+    IRB.start
+  end
+end
