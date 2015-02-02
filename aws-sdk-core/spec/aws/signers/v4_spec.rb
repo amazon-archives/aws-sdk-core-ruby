@@ -98,12 +98,23 @@ module Aws
 
       context '#signed_headers' do
 
+        class TestHttpRequest
+          attr_accessor :headers
+
+          def initialize(headers = {})
+            @headers = headers
+          end
+        end
+
+        let(:http_request) { TestHttpRequest.new }
+
         it 'lower-cases and sort all header keys except authorization' do
           http_request.headers['Xyz'] = '1'
           http_request.headers['Abc'] = '2'
           http_request.headers['Mno'] = '3'
           http_request.headers['Authorization'] = '4'
           http_request.headers['authorization'] = '5'
+
           expect(signer.signed_headers(http_request)).to eq('abc;mno;xyz')
         end
 
