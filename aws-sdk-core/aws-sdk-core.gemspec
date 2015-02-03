@@ -13,6 +13,7 @@ Gem::Specification.new do |spec|
   spec.require_paths = ['lib']
 
   spec.files = ['endpoints.json']
+  spec.files += ['aws.rb.1']
   spec.files += Dir['lib/**/*.rb']
   spec.files += Dir['apis/*.json'].select { |p| !p.match(/\.docs\.json$/) }
 
