@@ -1,9 +1,0 @@
-/.bundle
-/.yardoc
-/*.gem
-/api-docs
-/api-docs.zip
-/integration-test-config.json
-/coverage
-/Gemfile.lock
-/vendor
